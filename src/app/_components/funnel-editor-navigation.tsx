@@ -1,15 +1,11 @@
 'use client'
-import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -18,8 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Toaster } from '@/components/ui/sonner'
-import { convertObjectToStringCss, convertObjectToStringHtml, convertObjectToStringReact, cssFormat, cssFormatCompiler, htmlFormat, htmlFormatCompiler, marginChecker, paddingChecker, paddingCheckerContainer, reactFormat, reactFormatCompiler, resetCssFormat, resetHtmlFormat, resetReactFormat } from '@/lib/utils'
+import { cssFormat, cssFormatCompiler, htmlFormat, htmlFormatCompiler, reactFormat, reactFormatCompiler, resetCssFormat, resetHtmlFormat, resetReactFormat } from '@/lib/utils'
 import { DeviceTypes, EditorElement, useEditor } from '@/providers/editor/editor-provider'
 import clsx from 'clsx'
 import {
@@ -28,16 +23,14 @@ import {
   EyeIcon,
   Laptop,
   Redo2,
-  RemoveFormattingIcon,
   Smartphone,
   Tablet,
   Undo2,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { FocusEventHandler, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
-import { useSonner } from 'sonner'
 
 
 type Props = {
@@ -48,10 +41,8 @@ type Props = {
 
 const FunnelEditorNavigation = ({
   funnelId,
-  funnelPageDetails,
   subaccountId,
 }: Props) => {
-  const router = useRouter()
   const { state, dispatch } = useEditor()
   const [loading, setLoading] = useState(false)
   

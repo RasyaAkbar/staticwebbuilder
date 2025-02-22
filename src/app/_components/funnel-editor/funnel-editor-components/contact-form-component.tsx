@@ -2,7 +2,6 @@
 
 import { Badge } from "@/components/ui/badge";
 
-import { EditorBtns } from "@/lib/constants";
 
 
 import { EditorElement, useEditor } from "@/providers/editor/editor-provider";
@@ -12,15 +11,13 @@ import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
-import { z } from "zod";
 
 type Props = {
   element: EditorElement;
 };
 
 const ContactFormComponent = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
-  const router = useRouter();
+  const { dispatch, state } = useEditor();
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = (event: React.MouseEvent) => {

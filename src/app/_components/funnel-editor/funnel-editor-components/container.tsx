@@ -1,6 +1,5 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { EditorBtns, defaultStyles } from "@/lib/constants";
 import {
   changeId,
   EditorElement,
@@ -8,18 +7,16 @@ import {
 } from "@/providers/editor/editor-provider";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { Clipboard, ClipboardCheck, Trash } from "lucide-react";
 import { Action } from "@/lib/types";
 import DropArea from "./drop-area";
-import { toast } from "@/components/ui/use-toast";
 import { isDescendant } from "@/lib/utils";
 
 type Props = { element: EditorElement; index?: number };
 
-const Container = ({ element, index }: Props) => {
-  const { id, content, name, styles, type } = element;
+const Container = ({ element }: Props) => {
+  const { id, content, styles, type } = element;
   const { dispatch, state } = useEditor();
   const [isCopied, setIsCopied] = useState(false);
 
@@ -108,7 +105,7 @@ const Container = ({ element, index }: Props) => {
     };
   }, [state.editor.selectedElement]); // Dependency on copiedObject ensures that the latest object is always used
 
-  const handleOnDrop = (e: React.DragEvent, type: string) => {
+  const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
     const componentType = e.dataTransfer
       .getData("componentType")

@@ -1,14 +1,7 @@
 'use client'
-import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
+import { useEditor } from '@/providers/editor/editor-provider'
 import React, { useEffect, useState } from 'react'
 import Recursive from './recursive'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
 
 type Props = {}
 

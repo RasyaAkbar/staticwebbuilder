@@ -1,10 +1,9 @@
-import { defaultStyles, EditorBtns } from "@/lib/constants";
+import { defaultStyles } from "@/lib/constants";
 import React from "react";
 import { v4 } from "uuid";
 
-type Props = {};
 
-const ContainerPlaceholder = (props: Props) => {
+const ContainerPlaceholder = () => {
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);
