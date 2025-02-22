@@ -6,9 +6,9 @@ import { EyeOff } from "lucide-react";
 import React, { useEffect, useMemo } from "react";
 import Recursive from "./funnel-editor-components/recursive";
 
-type Props = { funnelPageId: string; liveMode?: boolean; initialData?: any };
+type Props = { liveMode?: boolean; initialData?: any };
 
-const FunnelEditor = ({ funnelPageId, liveMode, initialData }: Props) => {
+const FunnelEditor = ({ liveMode, initialData }: Props) => {
   const { dispatch, state } = useEditor();
   useEffect(() => {
     if (liveMode) {

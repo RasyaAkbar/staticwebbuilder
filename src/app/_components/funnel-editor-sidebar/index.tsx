@@ -19,12 +19,9 @@ import ComponentsTab from './tabs/components-tab'
 import LayersTab from './tabs/layers-tab'
 
 
-type Props = {
-  subaccountId: string
-  media?: null
-}
 
-const FunnelEditorSidebar = ({ subaccountId, media }: Props) => {
+
+const FunnelEditorSidebar = () => {
   const { state, dispatch } = useEditor()
 
   return (
