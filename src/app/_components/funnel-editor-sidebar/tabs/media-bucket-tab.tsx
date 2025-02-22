@@ -1,13 +1,10 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-type Props = {
-  subaccountId: string
-  media: null
-}
 
-const MediaBucketTab = (props: Props) => {
+
+const MediaBucketTab = () => {
   /*const [data, setdata] = useState<GetMediaFiles>(null)
 
   useEffect(() => {
@@ -19,7 +16,7 @@ const MediaBucketTab = (props: Props) => {
   }, [props.subaccountId])*/
 
   return (
-    <div className="h-[900px] overflow-scroll p-4">
+    <div>
      
     </div>
   )

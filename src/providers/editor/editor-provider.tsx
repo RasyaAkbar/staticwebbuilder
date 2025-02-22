@@ -1,12 +1,7 @@
 "use client";
 import { EditorBtns } from "@/lib/constants";
 import { EditorAction } from "./editor-actions";
-import {
-  Dispatch,
-  createContext,
-  useContext,
-  useReducer,
-} from "react";
+import { Dispatch, createContext, useContext, useReducer } from "react";
 import { v4 } from "uuid";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";

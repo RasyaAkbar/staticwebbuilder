@@ -1,11 +1,10 @@
-import { EditorBtns } from "@/lib/constants";
-import { TypeIcon, VideoIcon, Youtube } from "lucide-react";
+import { Youtube } from "lucide-react";
 import React from "react";
 import { v4 } from "uuid";
 
-type Props = {};
 
-const VideoPlaceholder = (props: Props) => {
+
+const VideoPlaceholder = () => {
   //Draggable from sidebar to editor
   //Functionalities will be implemented in editor components
   const handleDragState = (e: React.DragEvent, type: string) => {
@@ -21,7 +20,7 @@ const VideoPlaceholder = (props: Props) => {
           e,
           `ADD_ELEMENT*&#^$${JSON.stringify({
             content: {
-              src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
+              src: "https://www.youtube.com/",
             },
             id: v4(),
             name: "Video",
