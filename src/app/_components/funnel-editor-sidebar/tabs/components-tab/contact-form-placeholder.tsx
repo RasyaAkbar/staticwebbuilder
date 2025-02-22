@@ -1,12 +1,5 @@
-import { EditorBtns } from "@/lib/constants";
-import { Action } from "@/lib/types";
-import { EditorElement } from "@/providers/editor/editor-provider";
 import {
   Contact2Icon,
-  Link,
-  Link2Icon,
-  ShoppingCartIcon,
-  TypeIcon,
 } from "lucide-react";
 import React from "react";
 import { v4 } from "uuid";

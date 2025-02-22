@@ -1,4 +1,4 @@
-import { defaultStyles, EditorBtns } from "@/lib/constants";
+import { defaultStyles } from "@/lib/constants";
 import React from "react";
 import { v4 } from "uuid";
 
