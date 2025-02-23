@@ -295,7 +295,6 @@ export const cssFormatCompiler = (element: EditorElement)=>{
         fontFamily: elementStyle.fontFamily || "Sans-serif"
       }
       cssFormat+= `${elementId} ${convertObjectToStringCss(linkStyle)}\n`
-      cssFormat+= `${elementId}_link ${convertObjectToStringCss(linkStyle)}\n`
     }
   }
 }
