@@ -175,6 +175,7 @@ export const elementCounters = {
 // Reset counters function
 export const resetElementCounters = () => {
   Object.keys(elementCounters).forEach(key => {
+    //@ts-ignore
     elementCounters[key as EditorBtns] = 0
   })
 }
@@ -195,7 +196,9 @@ export const htmlFormatCompiler = (element: EditorElement)=>{
     htmlFormat += `</div>\n`
   } else {
     let elementType = element.type as EditorBtns
+    //@ts-ignore
     elementCounters[elementType]++
+    //@ts-ignore
     const elementId = `${elementType}_${elementCounters[elementType]}`
 
     if(element.type === 'text'){
@@ -255,7 +258,9 @@ export const cssFormatCompiler = (element: EditorElement)=>{
 
   }else{
     let elementType = element.type as EditorBtns
+    //@ts-ignore
     elementCounters[elementType]++
+    //@ts-ignore
     const elementId = `#${elementType}_${elementCounters[elementType]}`
     const baseStyle = {
       ...paddingChecker(elementStyle),
