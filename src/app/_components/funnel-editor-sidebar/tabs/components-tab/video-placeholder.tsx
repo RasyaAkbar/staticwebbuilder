@@ -20,7 +20,7 @@ const VideoPlaceholder = () => {
           e,
           `ADD_ELEMENT*&#^$${JSON.stringify({
             content: {
-              src: "https://www.youtube.com/",
+              src: "https://www.youtube.com/embed/6R6CUN3q7kI?si=u4aPMjSHJcUSRmds",
             },
             id: v4(),
             name: "Video",

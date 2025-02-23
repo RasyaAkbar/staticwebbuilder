@@ -175,7 +175,7 @@ const TextComponent = (props: Props) => {
         )}
       {state.editor.selectedElement.id === props.element.id &&
         !state.editor.liveMode && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg ">
             <Trash
               className="cursor-pointer"
               size={16}

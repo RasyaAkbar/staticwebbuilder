@@ -113,53 +113,7 @@ const ContactFormComponent = (props: Props) => {
   
 
   return (
-    <div
-      style={styles}
-      draggable={!state.editor.liveMode}
-      onDragStart={(e) =>
-        handleDragStart(e, `MOVE_ELEMENT*&#^$${JSON.stringify(props.element)}`)
-      }
-      onClick={handleOnClickBody}
-      className={clsx(
-        "p-[2px] w-full m-[5px] relative text-[16px] transition-all flex items-center justify-center",
-        {
-          "!border-blue-500":
-            state.editor.selectedElement.id === props.element.id,
-
-          "!border-solid": state.editor.selectedElement.id === props.element.id,
-          "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
-        }
-      )}
-    >
-      {state.editor.selectedElement.id === props.element.id &&
-        !state.editor.liveMode && (
-          <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg ">
-            {state.editor.selectedElement.name}
-          </Badge>
-        )}
-      
-      {state.editor.selectedElement.id === props.element.id &&
-        !state.editor.liveMode &&
-        state.editor.selectedElement.type !== "__body" && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] right-[35px] rounded-none rounded-t-lg ">
-            {isCopied ? (
-              <ClipboardCheck size={16} />
-            ) : (
-              <Clipboard size={16} onClick={handleCopy} />
-            )}
-          </div>
-        )}
-      {state.editor.selectedElement.id === props.element.id &&
-        !state.editor.liveMode && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
-            <Trash
-              className="cursor-pointer"
-              size={16}
-              onClick={()=>{}}
-            />
-          </div>
-        )}
-    </div>
+    <></>
   );
 };
 

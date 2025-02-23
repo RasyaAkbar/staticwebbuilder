@@ -173,7 +173,7 @@ const Container = ({ element }: Props) => {
         className={clsx("relative p-4 transition-all group", {
           "max-w-full w-full": type === "container" || type === "2Col",
           "h-fit": type === "container",
-          "h-[calc(100vh-96px)] pr-0 pt-0 pb-0": type === "__body",
+          "h-[calc(100vh-96px)] bg-white pr-0 pt-0 pb-0": type === "__body",
           "h-screen": type === "__body"&&
           (state.editor.liveMode || state.editor.previewMode),
          'w-[calc(100%-64px)]': type === '__body' && !state.editor.openSidebar && !state.editor.previewMode && !state.editor.liveMode,
@@ -228,7 +228,7 @@ const Container = ({ element }: Props) => {
         {state.editor.selectedElement.id === element.id &&
           !state.editor.liveMode &&
           state.editor.selectedElement.type !== "__body" && (
-            <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] right-[35px] rounded-none rounded-t-lg ">
+            <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] right-[35px] rounded-none rounded-t-lg text-black">
               {isCopied ? (
                 <ClipboardCheck size={16} />
               ) : (
@@ -239,7 +239,7 @@ const Container = ({ element }: Props) => {
         {state.editor.selectedElement.id === element.id &&
           !state.editor.liveMode &&
           state.editor.selectedElement.type !== "__body" && (
-            <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg ">
+            <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg text-black">
               <Trash size={16} onClick={handleDeleteElement} />
             </div>
           )}

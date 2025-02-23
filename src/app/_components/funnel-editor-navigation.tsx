@@ -44,15 +44,25 @@ const FunnelEditorNavigation = () => {
 
   const handleDownloadHtml = () => {
     htmlFormatCompiler(state.editor.elements[0])
-    const data = htmlFormat;
+    const data = htmlFormat + "</body> \n</html>";
     const blob = new Blob([data], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "GreatWeb.html";
+    a.download = "GreatWebsite.html";
     a.click();
     URL.revokeObjectURL(url);
     resetHtmlFormat()
+    cssFormatCompiler(state.editor.elements[0])
+    const cssdata = cssFormat;
+    const cssblob = new Blob([cssdata], { type: "text/css" });
+    const cssurl = URL.createObjectURL(cssblob);
+    const cssa = document.createElement("a");
+    cssa.href = cssurl;
+    cssa.download = "styles.css";
+    cssa.click();
+    URL.revokeObjectURL(cssurl);
+    resetCssFormat()
   };
 
   const handleDownloadReact = () => {
@@ -69,16 +79,7 @@ const FunnelEditorNavigation = () => {
   };
 
   const handleDownloadCss = () => {
-    cssFormatCompiler(state.editor.elements[0])
-    const data = cssFormat;
-    const blob = new Blob([data], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "GreatWeb.html";
-    a.click();
-    URL.revokeObjectURL(url);
-    resetCssFormat()
+    
   };
 
 
@@ -186,22 +187,7 @@ const FunnelEditorNavigation = () => {
           </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Button
-              variant={'ghost'}
-              size={'default'}
-              className="hover:bg-slate-800"
-              onClick={handleDownloadCss}
-              >
-                <Image 
-                  src={'/assets/icons8-css.svg'}
-                  width={32}
-                  height={32}
-                  alt='css logo'
-                  />
-                  <span>Css</span>
-              </Button>
-            </DropdownMenuItem>
+            
             <DropdownMenuItem>
               <Button
               variant={'ghost'}
@@ -210,7 +196,7 @@ const FunnelEditorNavigation = () => {
               onClick={handleDownloadHtml}
               >
                 <Image 
-                  src={'/assets/icons8-html.svg'}
+                  src={'./assets/icons8-html.svg'}
                   width={32}
                   height={32}
                   alt='html logo'
@@ -226,7 +212,7 @@ const FunnelEditorNavigation = () => {
               onClick={handleDownloadReact}
               >
                 <Image 
-                  src={'/assets/icons8-react.svg'}
+                  src={'./assets/icons8-react.svg'}
                   width={32}
                   height={32}
                   alt='react logo'

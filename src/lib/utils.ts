@@ -2,6 +2,10 @@ import { EditorElement } from "@/providers/editor/editor-provider";
 import { type ClassValue, clsx } from "clsx"
 import React from "react";
 import { twMerge } from "tailwind-merge"
+import { EditorBtns } from "./constants";
+
+// Add this type definition near the top of the file
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -95,64 +99,7 @@ export const marginChecker = (style: React.CSSProperties )=>{
   };
 }
 
-export let htmlFormat="<!DOCTYPE html> \n<html lang=\"en\"> \n<head> \n<meta charset=\"UTF-8\"> \n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> \n<title>Document</title> \n</head> \n<body style=\"margin: 0px\"> \n"
 
-
-export const htmlFormatCompiler = (element: EditorElement)=>{
-  let elementStyle = {...element.styles} // make deep copy
-  if(Array.isArray(element.content)){
-    elementStyle={...paddingCheckerContainer(elementStyle)}
-    elementStyle= {...elementStyle, position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms", backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): ""};
-    if(element.type === '__body'){
-      elementStyle = {...elementStyle, padding: "0px", height: "100vh", overflow: "scroll",maxWidth: "100%", width: "100%"}
-    }else{
-      if(element.type=== 'container'){
-        elementStyle= {...elementStyle, height: elementStyle.height || "fit-content", width: elementStyle.width || "100%"}
-      }else{
-        elementStyle= {...elementStyle, display: elementStyle.display || "flex", flexDirection: elementStyle.flexDirection || "column",height: elementStyle.height || "fit-content", width: elementStyle.width || "100%"}
-      }
-    }
-    htmlFormat+= `<div style=${convertObjectToStringHtml(elementStyle)}>\n`
-    element.content.map(item => htmlFormatCompiler(item))
-    htmlFormat+= `</div>\n`
-
-  }else{
-    if(element.type === 'text'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", fontFamily: elementStyle.fontFamily || "Sans-serif"}
-      htmlFormat+=`<div style=${convertObjectToStringHtml(elementStyle)}>\n`
-      htmlFormat+=`<span>\n${element.content.innerText}\n</span>\n`
-      htmlFormat+= `</div>\n`
-    }else if(element.type === 'video'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", display: elementStyle.display || "flex", alignItems: elementStyle.alignItems|| "center", justifyContent: elementStyle.justifyContent || "center"}
-      htmlFormat+=`<div style=${convertObjectToStringHtml(elementStyle)}>\n`
-      htmlFormat+=`<iframe src=${element.content.src || '#'} style=${convertObjectToStringHtml(elementStyle)} allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"/>\n`
-      htmlFormat+= `</div>\n`
-    }else if(element.type === 'image'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", display: elementStyle.display || "flex", alignItems: elementStyle.alignItems|| "center", justifyContent: elementStyle.justifyContent || "center"}
-      htmlFormat+=`<div style=${convertObjectToStringHtml(elementStyle)}>\n`
-      htmlFormat+=`<img src=${element.content.src || '#'} style=${convertObjectToStringHtml(elementStyle)}/>\n`
-      htmlFormat+= `</div>\n`
-    }else if(element.type === 'link'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", textDecorationLine: elementStyle.textDecorationLine || "none", color: elementStyle.color || "blue", fontFamily: elementStyle.fontFamily || "Sans-serif"}
-      htmlFormat+=`<div style=${convertObjectToStringHtml(elementStyle)}>\n`
-      htmlFormat+=`<a href=${element.content.href || '#'} style=${convertObjectToStringHtml(elementStyle)}>\n${element.content.innerText}\n</a>\n`
-      htmlFormat+= `</div>\n`
-    }
-    htmlFormat+= "</body> \n</html>"
-  }
-}
-
-export const resetHtmlFormat=()=>{
-  htmlFormat="<!DOCTYPE html> \n<html lang=\"en\"> \n<head> \n<meta charset=\"UTF-8\"> \n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> \n<title>Document</title> \n</head> \n<body> \n"
-}
 
 export let reactFormat=""
 
@@ -212,12 +159,86 @@ export const resetReactFormat=()=>{
 }
 
 
+export let htmlFormat="<!DOCTYPE html> \n<html lang=\"en\"> \n<head> \n<meta charset=\"UTF-8\"> \n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> \n<link rel=\"stylesheet\" href=\"styles.css\"> \n<title>Document</title> \n</head> \n<body style=\"margin: 0px\"> \n"
+
+// Add counters for each element type
+export const elementCounters = {
+  "text": 0,
+  "video": 0,
+  "image": 0,
+  "link": 0,
+  "container": 0,
+  "__body": 0,
+  "span": 0
+}
+
+// Reset counters function
+export const resetElementCounters = () => {
+  Object.keys(elementCounters).forEach(key => {
+    elementCounters[key as EditorBtns] = 0
+  })
+}
+
+export const htmlFormatCompiler = (element: EditorElement)=>{
+  if (Array.isArray(element.content)) {
+    let elementType: EditorBtns = 'container'
+    if (element.type === '__body') {
+      elementType = '__body'
+    } else if (element.type === 'container') {
+      elementType = 'container'
+    }
+    elementCounters[elementType]++
+    const elementId = `${elementType}_${elementCounters[elementType]}`
+
+    htmlFormat += `<div id="${elementId}">\n`
+    element.content.map(item => htmlFormatCompiler(item))
+    htmlFormat += `</div>\n`
+  } else {
+    let elementType = element.type as EditorBtns
+    elementCounters[elementType]++
+    const elementId = `${elementType}_${elementCounters[elementType]}`
+
+    if(element.type === 'text'){
+      htmlFormat+=`<p id="${elementId}">\n`
+      htmlFormat+=`<span>\n${element.content.innerText}\n</span>\n`
+      htmlFormat+= `</p>\n`
+    }else if(element.type === 'video'){
+      htmlFormat+=`<div id="${elementId}">\n`
+      htmlFormat+=`<iframe src="${element.content.src || '#'}" id="${elementId}_frame" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"/>\n`
+      htmlFormat+= `</div>\n`
+    }else if(element.type === 'image'){
+      htmlFormat+=`<div id="${elementId}">\n`
+      htmlFormat+=`<img src="${element.content.src || '#'} "id="${elementId}_img"/>\n`
+      htmlFormat+= `</div>\n`
+    }else if(element.type === 'link'){
+      htmlFormat+=`<div id="${elementId}">\n`
+      htmlFormat+=`<a href="${element.content.href || '#'}" id="${elementId}_link">\n${element.content.innerText}\n</a>\n`
+      htmlFormat+= `</div>\n`
+    }
+      
+  }
+}
+
+export const resetHtmlFormat=()=>{
+  htmlFormat="<!DOCTYPE html> \n<html lang=\"en\"> \n<head> \n<meta charset=\"UTF-8\"> \n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> \n<link rel=\"stylesheet\" href=\"styles.css\"> \n<title>Document</title> \n</head> \n<body> \n"
+  resetElementCounters()
+}
 
 export let cssFormat=""
 
 export const cssFormatCompiler = (element: EditorElement)=>{
   let elementStyle = {...element.styles} // make deep copy
   if(Array.isArray(element.content)){
+    let elementType: EditorBtns = 'container'
+    if (element.type === '__body') {
+      elementType = '__body'
+    } else if (element.type === 'container') {
+      elementType = 'container'
+    }
+    elementCounters[elementType]++
+    const elementId = `#${elementType}_${elementCounters[elementType]}`
+
+  
     elementStyle={...paddingCheckerContainer(elementStyle)}
     elementStyle= {...elementStyle, position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms", backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): ""};
     if(element.type === '__body'){
@@ -229,43 +250,52 @@ export const cssFormatCompiler = (element: EditorElement)=>{
         elementStyle= {...elementStyle, display: elementStyle.display || "flex", flexDirection: elementStyle.flexDirection || "column",height: elementStyle.height || "fit-content", width: elementStyle.width || "100%"}
       }
     }
-    cssFormat+= `<div style={${convertObjectToStringCss(elementStyle)}}>\n`
+    cssFormat+= `${elementId} ${convertObjectToStringCss(elementStyle)}\n`
     element.content.map(item => cssFormatCompiler(item))
-    cssFormat+= `</div>\n`
 
   }else{
+    let elementType = element.type as EditorBtns
+    elementCounters[elementType]++
+    const elementId = `#${elementType}_${elementCounters[elementType]}`
+    const baseStyle = {
+      ...paddingChecker(elementStyle),
+      ...marginChecker(elementStyle),
+      width: elementStyle.width || "100%",
+      fontSize: elementStyle.fontSize || "16px",
+      position: "relative",
+      transitionProperty: "all",
+      transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",
+      transitionDuration: "150ms",
+      backgroundImage: elementStyle.backgroundImage ? elementStyle.backgroundImage.replaceAll(" ", "") : ""
+    }
+
     if(element.type === 'text'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", fontFamily: elementStyle.fontFamily || "Sans-serif"}
-      cssFormat+=`<div style={${convertObjectToStringCss(elementStyle)}}>\n`
-      cssFormat+=`<span>\n${element.content.innerText}\n</span>\n`
-      cssFormat+= `</div>\n`
-    }else if(element.type === 'video'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", display: elementStyle.display || "flex", alignItems: elementStyle.alignItems|| "center", justifyContent: elementStyle.justifyContent || "center"}
-      cssFormat+=`<div style={${convertObjectToStringCss(elementStyle)}}>\n`
-      cssFormat+=`<iframe src=${element.content.src || '#'} style={${convertObjectToStringCss(elementStyle)}} allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share"/>\n`
-      cssFormat+= `</div>\n`
-    }else if(element.type === 'image'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", display: elementStyle.display || "flex", alignItems: elementStyle.alignItems|| "center", justifyContent: elementStyle.justifyContent || "center"}
-      cssFormat+=`<div style={${convertObjectToStringCss(elementStyle)}}>\n`
-      cssFormat+=`<img src=${element.content.src || '#'} style={${convertObjectToStringCss(elementStyle)}}/>\n`
-      cssFormat+= `</div>\n`
+      cssFormat+= `${elementId} ${convertObjectToStringCss({ ...baseStyle, ...elementStyle, fontFamily: elementStyle.fontFamily || "Sans-serif" })}\n`
+    }else if(element.type === 'video' || element.type === 'image'){
+      const mediaStyle = {
+        ...baseStyle,
+        ...elementStyle,
+        display: elementStyle.display || "flex",
+        alignItems: elementStyle.alignItems || "center",
+        justifyContent: elementStyle.justifyContent || "center"
+      }
+      cssFormat+= `${elementId} ${convertObjectToStringCss(mediaStyle)}\n`
+      cssFormat+= `${elementId}_${element.type === 'video' ? 'frame' : 'img'} ${convertObjectToStringCss(mediaStyle)}\n`
     }else if(element.type === 'link'){
-      elementStyle = {...paddingChecker(elementStyle)}
-      elementStyle = {...marginChecker(elementStyle)}
-      elementStyle = {...elementStyle, width: elementStyle.width || "100%", fontSize: elementStyle.fontSize || "16px", position: "relative", transitionProperty: "all", transitionTimingFunction: "cubic-bezier(0.4,0,0.2,1)",transitionDuration: "150ms",backgroundImage: elementStyle.backgroundImage? elementStyle.backgroundImage.replaceAll(" ", ""): "", textDecorationLine: elementStyle.textDecorationLine || "none", color: elementStyle.color || "blue", fontFamily: elementStyle.fontFamily || "Sans-serif"}
-      cssFormat+=`<div style={${convertObjectToStringCss(elementStyle)}}>\n`
-      cssFormat+=`<a href=${element.content.href || '#'} style={${convertObjectToStringCss(elementStyle)}}>\n${element.content.innerText}\n</a>\n`
-      cssFormat+= `</div>\n`
+      const linkStyle = {
+        ...baseStyle,
+        ...elementStyle,
+        textDecorationLine: elementStyle.textDecorationLine || "none",
+        color: elementStyle.color || "blue",
+        fontFamily: elementStyle.fontFamily || "Sans-serif"
+      }
+      cssFormat+= `${elementId} ${convertObjectToStringCss(linkStyle)}\n`
+      cssFormat+= `${elementId}_link ${convertObjectToStringCss(linkStyle)}\n`
     }
   }
 }
 
 export const resetCssFormat=()=>{
   cssFormat=""
+  resetElementCounters()
 }

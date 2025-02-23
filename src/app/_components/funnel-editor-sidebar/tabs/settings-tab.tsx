@@ -276,20 +276,17 @@ const SettingsTab = (props: Props) => {
           <div className="flex flex-col gap-2">
             <p className="text-muted-foreground">Color</p>
             <div className="flex flex-row space-x-2">
-              <Input
-              //defaultValue={state.editor.selectedElement.type === null ? '': state.editor.selectedElement.styles.color}
+            <Input
               type='color'
+                placeholder="#HFI245"
+                className="!border-y-0 rounded-none !border-r-0 mr-2"
                 id="color"
-                onChange={(e)=>{
-                  setColor(e.target.value)
-                  handleOnChanges({
-                    target:{
-                      id: 'color'
-                    }
-                  })
-                }}
-                value={state.editor.selectedElement.styles.color}
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.color} //change background color
               />
+            </div>
+            <div className="flex items-center gap-2 my-3">
+              
               {isCopied? <CopyCheck /> : <Copy onClick={(e)=>handleCopy({
                 target:{
                   id:'color'
